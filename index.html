@@ -18,6 +18,13 @@
 .STYLE1 {
 	color: #666666
 }
+.floating-img {
+  position: fixed; /* 固定定位，覆盖整个屏幕 */
+  width: 150px;
+  height: 150px;
+  cursor: pointer; /* 可点击拖动 */
+  transition: all 2s ease-in-out; /* 平滑动画 */
+}
 -->
 </style>
 </head>
@@ -29,10 +36,13 @@
   <!--  <source src="https://rm-sycdn.kuwo.cn/3f7265e3c39c5f3b80128497546c7e47/687f55ae/resource/n1/94/77/3888882623.mp3" type="audio/mpeg">-->
 </audio>
 <div id="main">
-  <img src="./gire.jpg"  style="width: 150px;;height: 150px;z-index: 0" alt="">
 
   <div id="error">本页面采用HTML5编辑，目前您的浏览器无法显示，请换成谷歌(Chrome)或者火狐(Firefox)浏览器，或者其他游览器的最新版本。</div>
   <div id="wrap">
+    <img src="./gire.jpg"  class="floating-img" style="width: 150px;;height: 150px;z-index: 0;border-radius: 20px" alt="">
+    <img src="./gire1.jpg"  class="floating-img" style="width: 150px;;height: 150px;z-index: 0;border-radius: 20px" alt="">
+    <img src="./gire2.jpg"  class="floating-img" style="width: 150px;;height: 150px;z-index: 0;border-radius: 20px" alt="">
+
     <div id="text">
       <div id="code"> <font color="#FF0000"> <span class="say">亲爱的蓝东丽小宝宝，我爱你，虽然你看不见我对你的告白</span><br>
         <span class="say"> </span><br>
@@ -61,6 +71,8 @@
     (function(){
       const audioPlayer = document.getElementById('audio-player');
       audioPlayer.currentTime = 10;
+
+
 
       var canvas = $('#canvas');
 		
@@ -124,6 +136,26 @@
                 canvas.removeClass('hand');
             }
           audioPlayer.play();
+          const imgs = document.getElementsByClassName("floating-img");
+          const screenWidth = window.innerWidth;
+          const screenHeight = window.innerHeight;
+          // 设置随机位置函数
+          function setRandomPosition(img) {
+            const randomX = Math.random() * (screenWidth - img.width);
+            const randomY = Math.random() * (screenHeight - img.height);
+            img.style.left = `${randomX}px`;
+            img.style.top = `${randomY}px`;
+          }
+          // 初始随机位置
+
+          setInterval(()=>{
+            for (let i = 0; i < imgs.length; i++) {
+              setRandomPosition(imgs[i]);
+            }
+          }, 3000);
+
+          // 每隔 3 秒移动到新位置
+
         }).mousemove(function(e){
             var offset = canvas.offset(), x, y;
             x = e.pageX - offset.left;
