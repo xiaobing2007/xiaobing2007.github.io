@@ -22,8 +22,9 @@
   position: fixed; /* 固定定位，覆盖整个屏幕 */
   width: 150px;
   height: 150px;
-  cursor: pointer; /* 可点击拖动 */
+  /*cursor: pointer; !* 可点击拖动 *!*/
   transition: all 2s ease-in-out; /* 平滑动画 */
+  border-radius: 20px
 }
 -->
 </style>
@@ -39,9 +40,9 @@
 
   <div id="error">本页面采用HTML5编辑，目前您的浏览器无法显示，请换成谷歌(Chrome)或者火狐(Firefox)浏览器，或者其他游览器的最新版本。</div>
   <div id="wrap">
-    <img src="./gire.jpg"  class="floating-img" style="width: 150px;;height: 150px;z-index: 0;border-radius: 20px" alt="">
-    <img src="./gire1.jpg"  class="floating-img" style="width: 150px;;height: 150px;z-index: 0;border-radius: 20px" alt="">
-    <img src="./gire2.jpg"  class="floating-img" style="width: 150px;;height: 150px;z-index: 0;border-radius: 20px" alt="">
+    <img src="./gire.jpg"  class="floating-img" style="left:10px" alt="">
+    <img src="./gire1.jpg"  class="floating-img" style="left:20px" alt="">
+    <img src="./gire2.jpg"  class="floating-img" style="left:30px" alt="">
 
     <div id="text">
       <div id="code"> <font color="#FF0000"> <span class="say">亲爱的蓝东丽小宝宝，我爱你，虽然你看不见我对你的告白</span><br>
@@ -71,7 +72,6 @@
     (function(){
       const audioPlayer = document.getElementById('audio-player');
       audioPlayer.currentTime = 10;
-
 
 
       var canvas = $('#canvas');
@@ -153,7 +153,27 @@
               setRandomPosition(imgs[i]);
             }
           }, 3000);
-
+          var i = -1;
+          setInterval(()=>{
+            if (i==0){
+              imgs[2].style.width = '150px';
+              imgs[2].style.height = '150px';
+            }
+            if (i === -1){
+              imgs[0].style.width = '350px';
+              imgs[0].style.height = '350px';
+              i++;
+            }else{
+                imgs[i].style.width = '150px';
+                imgs[i].style.height = '150px';
+              i++;
+              imgs[i].style.width = '350px';
+              imgs[i].style.height = '350px';
+            }
+            if(i==2){
+              i=0;
+            }
+          }, 3000);
           // 每隔 3 秒移动到新位置
 
         }).mousemove(function(e){
