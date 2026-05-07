@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>专属浪漫送给你</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(-45deg, #ee9ca7, #ffdde1, #f6d365, #fda085);
+      background-size: 400% 400%;
+      animation: bgMove 12s ease infinite;
+      font-family: "微软雅黑", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    @keyframes bgMove {
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
+    }
+    .title {
+      font-size: 42px;
+      color: #fff;
+      text-shadow: 0 0 10px #ff4e88, 0 0 20px #ff4e88;
+      margin-bottom: 25px;
+      animation: titleFlash 2s ease-in-out infinite alternate;
+      z-index: 9;
+    }
+    @keyframes titleFlash {
+      from {transform: scale(1);}
+      to {transform: scale(1.05);}
+    }
+    .word-box {
+      font-size: 22px;
+      color: #fff;
+      text-shadow: 0 0 8px rgba(255,255,255,0.8);
+      line-height: 2;
+      text-align: center;
+      padding: 0 15px;
+      z-index: 9;
+    }
+
+    /* ========== 2D 照片墙 ========== */
+    .photo-wall {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .photo {
+      position: absolute;
+      width: 110px;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 3px solid #fff;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+      animation: float 6s ease-in-out infinite;
+    }
+    .photo:hover {
+      transform: scale(1.15);
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(1deg); }
+    }
+    /* ========== 照片墙结束 ========== */
+
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      color: #ff3e6c;
+      opacity: 0.8;
+      animation: heartUp linear forwards;
+      pointer-events: none;
+      z-index: 5;
+    }
+    @keyframes heartUp {
+      0% {transform: translateY(100vh) rotate(0deg); opacity: 1;}
+      100% {transform: translateY(-10vh) rotate(360deg); opacity: 0;}
+    }
+    .flower {
+      position: absolute;
+      font-size: 16px;
+      color: #ffc8dd;
+      animation: flowerFall linear forwards;
+      pointer-events: none;
+      z-index: 5;
+    }
+    @keyframes flowerFall {
+      0% {transform: translateY(-10vh) rotate(0deg); opacity: 1;}
+      100% {transform: translateY(100vh) rotate(720deg); opacity: 0;}
+    }
+    .star {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: #fff;
+      border-radius: 50%;
+      animation: starTwinkle 2s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 5;
+    }
+    @keyframes starTwinkle {
+      0%,100% {opacity: 0.2;}
+      50% {opacity: 1;}
+    }
+    .firework {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 照片墙 -->
+<div class="photo-wall">
+  <img class="photo" style="top:12%; left:8%;" src="https://picsum.photos/300/300?random=1">
+  <img class="photo" style="top:18%; left:28%;" src="https://picsum.photos/300/300?random=2">
+  <img class="photo" style="top:10%; left:55%;" src="https://picsum.photos/300/300?random=3">
+  <img class="photo" style="top:22%; left:78%;" src="https://picsum.photos/300/300?random=4">
+  <img class="photo" style="top:65%; left:10%;" src="https://picsum.photos/300/300?random=5">
+  <img class="photo" style="top:70%; left:35%;" src="https://picsum.photos/300/300?random=6">
+  <img class="photo" style="top:60%; left:65%;" src="https://picsum.photos/300/300?random=7">
+  <img class="photo" style="top:72%; left:82%;" src="https://picsum.photos/300/300?random=8">
+</div>
+
+<div class="title">✨ 你是世间所有美好 ✨</div>
+<div class="word-box" id="textBox"></div>
+
+<script>
+  // 夸赞文案
+  const praiseText = `
+你眼里有星光 笑里有温柔
+颜值气质双双在线
+善良通透 可爱又迷人
+三观超正 待人温柔
+能遇见你 是我最大的幸运
+愿往后朝夕 皆有你相伴
+`;
+
+  // 打字机
+  let idx = 0;
+  const textBox = document.getElementById('textBox');
+  function typeWrite(){
+    if(idx < praiseText.length){
+      textBox.innerHTML += praiseText.charAt(idx);
+      idx++;
+      setTimeout(typeWrite,70);
+    }
+  }
+  typeWrite();
+
+  // 飘爱心
+  function createHeart(){
+    const el = document.createElement('div');
+    el.className = 'heart';
+    el.innerHTML = '❤️';
+    el.style.left = Math.random()*100 + 'vw';
+    el.style.animationDuration = Math.random()*3 + 4 + 's';
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),7000);
+  }
+  setInterval(createHeart,400);
+
+  // 飘落花瓣
+  function createFlower(){
+    const el = document.createElement('div');
+    el.className = 'flower';
+    el.innerHTML = '🌸';
+    el.style.left = Math.random()*100 + 'vw';
+    el.style.animationDuration = Math.random()*4 + 5 + 's';
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),9000);
+  }
+  setInterval(createFlower,500);
+
+  // 闪烁星光
+  for(let i = 0; i < 80; i++){
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.left = Math.random()*100 + 'vw';
+    star.style.top = Math.random()*100 + 'vh';
+    star.style.animationDelay = Math.random()*2 + 's';
+    document.body.appendChild(star);
+  }
+
+  // 烟花
+  const colors = ['#ff3e6','#ffd700','#7fffaa','#87cefa','#dda0dd','#ff9f43','#a855f7'];
+
+  function launchFirework(x, y) {
+    for(let i = 0; i < 60; i++){
+      let p = document.createElement('div');
+      p.className = 'firework';
+      let size = Math.random() * 8 + 3;
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      p.style.background = colors[Math.floor(Math.random() * colors.length)];
+      p.style.left = x + 'px';
+      p.style.top = y + 'px';
+      document.body.appendChild(p);
+
+      let angle = Math.random() * Math.PI * 2;
+      let speed = Math.random() * 10 + 4;
+      let px = 0, py = 0;
+      let frame = 0;
+      function move(){
+        frame++;
+        px += Math.cos(angle) * speed;
+        py += Math.sin(angle) * speed;
+        p.style.left = x + px + 'px';
+        p.style.top = y + py + 'px';
+        p.style.opacity = 1 - frame / 50;
+        if(frame < 50) requestAnimationFrame(move);
+        else p.remove();
+      }
+      move();
+    }
+  }
+
+  function autoMoreFirework() {
+    let x1 = Math.random() * window.innerWidth * 0.3 + window.innerWidth * 0.15;
+    let y1 = Math.random() * window.innerHeight * 0.35 + 60;
+
+    let x2 = Math.random() * window.innerWidth * 0.3 + window.innerWidth * 0.35;
+    let y2 = Math.random() * window.innerHeight * 0.35 + 60;
+
+    let x3 = Math.random() * window.innerWidth * 0.3 + window.innerWidth * 0.6;
+    let y3 = Math.random() * window.innerHeight * 0.35 + 60;
+
+    launchFirework(x1, y1);
+    launchFirework(x2, y2);
+    launchFirework(x3, y3);
+  }
+
+  window.onload = () => {
+    autoMoreFirework();
+    setInterval(autoMoreFirework, 2000);
+  };
+</script>
+
+</body>
+</html>
